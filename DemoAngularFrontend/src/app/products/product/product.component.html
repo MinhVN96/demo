@@ -1,3 +1,42 @@
-<p>
-  product works!
-</p>
+<form class="pro-form" #productForm="ngForm" (ngSubmit)="onSubmit(productForm)">
+  <input type="hidden" name="ProductID" #ProductID="ngModel" [(ngModel)]="productService.selectedProduct.ProductID">
+  <div class="form-group">
+    <input class="form-control" name="Name" #Name="ngModel" [(ngModel)]="productService.selectedProduct.Name"
+      placeholder="Name" required>
+    <div class="validation-error" *ngIf="Name.invalid && Name.touched">This Field is Required.</div>      
+  </div>
+  
+  <div class="form-group">
+    <input class="form-control" name="CategoryID" #CategoryID="ngModel" [(ngModel)]="productService.selectedProduct.CategoryID" placeholder="CategoryID">
+  </div>
+  <div class="form-group">
+      <input class="form-control" name="WarehouseID" #WarehouseID="ngModel" [(ngModel)]="productService.selectedProduct.WarehouseID" placeholder="WarehouseID">
+    </div>
+  <div class="form-group">
+      <input class="form-control" name="Brand" #Brand="ngModel" [(ngModel)]="productService.selectedProduct.Brand" placeholder="Brand">
+  </div>
+  <div class="form-group">
+      <input class="form-control" name="Price" #Price="ngModel" [(ngModel)]="productService.selectedProduct.Price" placeholder="Price">
+  </div>
+  <div class="form-group">
+      <input class="form-control" name="Count" #Count="ngModel" [(ngModel)]="productService.selectedProduct.Count" placeholder="Count">
+  </div>
+
+  <div class="form-group">
+      <input class="form-control" name="Image" #Image="ngModel" [(ngModel)]="productService.selectedProduct.Image" placeholder="Image">
+  </div>
+  <div class="form-group">
+      <input class="form-control" name="Status" #Status="ngModel" [(ngModel)]="productService.selectedProduct.Status" placeholder="Status">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <button [disabled]="!productForm.valid" type="submit" class="btn btn-lg btn-block btn-info">
+        <i class="fa fa-floppy-o"></i> Create</button>
+    </div>
+    <div class="form-group col-md-6">
+      <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(productForm)">
+        <i class="fa fa-repeat"></i> Reset</button>
+    </div>
+  </div>
+</form>

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
@@ -20,13 +20,12 @@ import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.c
 import { WarehousesComponent } from './warehouses/warehouses.component';
 import { WarehouseComponent } from './warehouses/warehouse/warehouse.component';
 import { WarehouseListComponent } from './warehouses/warehouse-list/warehouse-list.component';
-import { ImportwarehouseComponent } from './importwarehouse/importwarehouse.component';
 import { ImportWarehousesComponent } from './import-warehouses/import-warehouses.component';
 import { ImportWarehouseComponent } from './import-warehouses/import-warehouse/import-warehouse.component';
 import { ImportWarehouseListComponent } from './import-warehouses/import-warehouse-list/import-warehouse-list.component';
 import { ExportWarehousesComponent } from './export-warehouses/export-warehouses.component';
-import { ExportWarehouseComponent } from './export-warehouse/export-warehouse.component';
-import { ExportWarehouseListComponent } from './export-warehouse-list/export-warehouse-list.component';
+import { ExportWarehouseComponent } from './export-warehouses/export-warehouse/export-warehouse.component';
+import { ExportWarehouseListComponent } from './export-warehouses/export-warehouse-list/export-warehouse-list.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { ExportWarehouseListComponent } from './export-warehouse-list/export-war
     WarehousesComponent,
     WarehouseComponent,
     WarehouseListComponent,
-    ImportwarehouseComponent,
     ImportWarehousesComponent,
     ImportWarehouseComponent,
     ImportWarehouseListComponent,
@@ -58,7 +56,8 @@ import { ExportWarehouseListComponent } from './export-warehouse-list/export-war
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

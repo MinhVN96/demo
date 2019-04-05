@@ -28,7 +28,7 @@ export class ProductService {
   getProductList(){
     this.http.get('http://localhost:64896/api/Products').map((data:Response)=>{return data.json() as Product[];}).toPromise().then(x=>{this.productList=x;});
   }
-  deleteEmployee(id: number) {
+  deleteProduct(id: number) {
     return this.http.delete('http://localhost:64896/api/Products' + id).map(res => res.json());
   }
 }
