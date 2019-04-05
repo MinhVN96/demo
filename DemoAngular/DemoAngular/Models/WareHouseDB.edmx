@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBWareHouse.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoryProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KHO.dbo.DetailExportWarehouse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DetailExportWarehouse">
+          <Key>
+            <PropertyRef Name="ExportID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ExportID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KHO.dbo.DetailImportWarehose' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DetailImportWarehose">
+          <Key>
+            <PropertyRef Name="ImportID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ImportID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="ExportWarehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CustomerID" Type="bigint" />
+          <Property Name="WarehouseID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ImportWarehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="SupplierID" Type="bigint" />
+          <Property Name="WarehouseID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="CategoryID" Type="bigint" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="250" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nchar" MaxLength="10" />
+          <Property Name="WarehouseID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_DetailExportWarehouse_ExportWarehouse1">
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="1" />
+          <End Role="DetailExportWarehouse" Type="Self.DetailExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExportWarehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailExportWarehouse">
+              <PropertyRef Name="ExportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailExportWarehouse_Product1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DetailExportWarehouse" Type="Self.DetailExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailExportWarehouse">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailImportWarehose_ImportWarehouse1">
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="1" />
+          <End Role="DetailImportWarehose" Type="Self.DetailImportWarehose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportWarehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailImportWarehose">
+              <PropertyRef Name="ImportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailImportWarehose_Product1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DetailImportWarehose" Type="Self.DetailImportWarehose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailImportWarehose">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExportWarehouse_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExportWarehouse">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExportWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExportWarehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportWarehouse_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportWarehouse">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportWarehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_CategoryProduct">
+          <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBWareHouseStoreContainer">
+          <EntitySet Name="CategoryProduct" EntityType="Self.CategoryProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExportWarehouse" EntityType="Self.ExportWarehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportWarehouse" EntityType="Self.ImportWarehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailExportWarehouse" EntityType="Self.DetailExportWarehouse" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DetailExportWarehouse].[ExportID] AS [ExportID], 
+    [DetailExportWarehouse].[ProductID] AS [ProductID], 
+    [DetailExportWarehouse].[Count] AS [Count], 
+    [DetailExportWarehouse].[Price] AS [Price]
+    FROM [dbo].[DetailExportWarehouse] AS [DetailExportWarehouse]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DetailImportWarehose" EntityType="Self.DetailImportWarehose" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DetailImportWarehose].[ImportID] AS [ImportID], 
+    [DetailImportWarehose].[ProductID] AS [ProductID], 
+    [DetailImportWarehose].[Count] AS [Count], 
+    [DetailImportWarehose].[Price] AS [Price]
+    FROM [dbo].[DetailImportWarehose] AS [DetailImportWarehose]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_DetailExportWarehouse_ExportWarehouse1" Association="Self.FK_DetailExportWarehouse_ExportWarehouse1">
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouse" />
+            <End Role="DetailExportWarehouse" EntitySet="DetailExportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailExportWarehouse_Product1" Association="Self.FK_DetailExportWarehouse_Product1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DetailExportWarehouse" EntitySet="DetailExportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailImportWarehose_ImportWarehouse1" Association="Self.FK_DetailImportWarehose_ImportWarehouse1">
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouse" />
+            <End Role="DetailImportWarehose" EntitySet="DetailImportWarehose" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailImportWarehose_Product1" Association="Self.FK_DetailImportWarehose_Product1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DetailImportWarehose" EntitySet="DetailImportWarehose" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExportWarehouse_Customer" Association="Self.FK_ExportWarehouse_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExportWarehouse_Warehouse" Association="Self.FK_ExportWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportWarehouse_Supplier" Association="Self.FK_ImportWarehouse_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportWarehouse_Warehouse" Association="Self.FK_ImportWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_CategoryProduct" Association="Self.FK_Product_CategoryProduct">
+            <End Role="CategoryProduct" EntitySet="CategoryProduct" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Warehouse" Association="Self.FK_Product_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBWareHouse" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CategoryProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_CategoryProduct" FromRole="CategoryProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExportWarehouses" Relationship="Self.FK_ExportWarehouse_Customer" FromRole="Customer" ToRole="ExportWarehouse" />
+        </EntityType>
+        <EntityType Name="ExportWarehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_ExportWarehouse_Customer" FromRole="ExportWarehouse" ToRole="Customer" />
+          <NavigationProperty Name="DetailExportWarehouses" Relationship="Self.FK_DetailExportWarehouse_ExportWarehouse1" FromRole="ExportWarehouse" ToRole="DetailExportWarehouse" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_ExportWarehouse_Warehouse" FromRole="ExportWarehouse" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="ImportWarehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierID" Type="Int64" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <NavigationProperty Name="DetailImportWarehoses" Relationship="Self.FK_DetailImportWarehose_ImportWarehouse1" FromRole="ImportWarehouse" ToRole="DetailImportWarehose" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_ImportWarehouse_Supplier" FromRole="ImportWarehouse" ToRole="Supplier" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_ImportWarehouse_Warehouse" FromRole="ImportWarehouse" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int64" />
+          <Property Name="Brand" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <NavigationProperty Name="CategoryProduct" Relationship="Self.FK_Product_CategoryProduct" FromRole="Product" ToRole="CategoryProduct" />
+          <NavigationProperty Name="DetailExportWarehouses" Relationship="Self.FK_DetailExportWarehouse_Product1" FromRole="Product" ToRole="DetailExportWarehouse" />
+          <NavigationProperty Name="DetailImportWarehoses" Relationship="Self.FK_DetailImportWarehose_Product1" FromRole="Product" ToRole="DetailImportWarehose" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Product_Warehouse" FromRole="Product" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ImportWarehouses" Relationship="Self.FK_ImportWarehouse_Supplier" FromRole="Supplier" ToRole="ImportWarehouse" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExportWarehouses" Relationship="Self.FK_ExportWarehouse_Warehouse" FromRole="Warehouse" ToRole="ExportWarehouse" />
+          <NavigationProperty Name="ImportWarehouses" Relationship="Self.FK_ImportWarehouse_Warehouse" FromRole="Warehouse" ToRole="ImportWarehouse" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Warehouse" FromRole="Warehouse" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="DetailExportWarehouse">
+          <Key>
+            <PropertyRef Name="ExportID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ExportID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ExportWarehouse" Relationship="Self.FK_DetailExportWarehouse_ExportWarehouse1" FromRole="DetailExportWarehouse" ToRole="ExportWarehouse" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_DetailExportWarehouse_Product1" FromRole="DetailExportWarehouse" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="DetailImportWarehose">
+          <Key>
+            <PropertyRef Name="ImportID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ImportID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ImportWarehouse" Relationship="Self.FK_DetailImportWarehose_ImportWarehouse1" FromRole="DetailImportWarehose" ToRole="ImportWarehouse" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_DetailImportWarehose_Product1" FromRole="DetailImportWarehose" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_CategoryProduct">
+          <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExportWarehouse_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExportWarehouse">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailExportWarehouse_ExportWarehouse1">
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="1" />
+          <End Role="DetailExportWarehouse" Type="Self.DetailExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExportWarehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailExportWarehouse">
+              <PropertyRef Name="ExportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExportWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="ExportWarehouse" Type="Self.ExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExportWarehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailImportWarehose_ImportWarehouse1">
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="1" />
+          <End Role="DetailImportWarehose" Type="Self.DetailImportWarehose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportWarehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailImportWarehose">
+              <PropertyRef Name="ImportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportWarehouse_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportWarehouse">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="ImportWarehouse" Type="Self.ImportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportWarehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailExportWarehouse_Product1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DetailExportWarehouse" Type="Self.DetailExportWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailExportWarehouse">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailImportWarehose_Product1">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DetailImportWarehose" Type="Self.DetailImportWarehose" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DetailImportWarehose">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WareHouseDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategoryProducts" EntityType="Self.CategoryProduct" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="ExportWarehouses" EntityType="Self.ExportWarehouse" />
+          <EntitySet Name="ImportWarehouses" EntityType="Self.ImportWarehouse" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <EntitySet Name="DetailExportWarehouses" EntityType="Self.DetailExportWarehouse" />
+          <EntitySet Name="DetailImportWarehoses" EntityType="Self.DetailImportWarehose" />
+          <AssociationSet Name="FK_Product_CategoryProduct" Association="Self.FK_Product_CategoryProduct">
+            <End Role="CategoryProduct" EntitySet="CategoryProducts" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExportWarehouse_Customer" Association="Self.FK_ExportWarehouse_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailExportWarehouse_ExportWarehouse1" Association="Self.FK_DetailExportWarehouse_ExportWarehouse1">
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouses" />
+            <End Role="DetailExportWarehouse" EntitySet="DetailExportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExportWarehouse_Warehouse" Association="Self.FK_ExportWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="ExportWarehouse" EntitySet="ExportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailImportWarehose_ImportWarehouse1" Association="Self.FK_DetailImportWarehose_ImportWarehouse1">
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouses" />
+            <End Role="DetailImportWarehose" EntitySet="DetailImportWarehoses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportWarehouse_Supplier" Association="Self.FK_ImportWarehouse_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportWarehouse_Warehouse" Association="Self.FK_ImportWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="ImportWarehouse" EntitySet="ImportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailExportWarehouse_Product1" Association="Self.FK_DetailExportWarehouse_Product1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DetailExportWarehouse" EntitySet="DetailExportWarehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailImportWarehose_Product1" Association="Self.FK_DetailImportWarehose_Product1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DetailImportWarehose" EntitySet="DetailImportWarehoses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Warehouse" Association="Self.FK_Product_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBWareHouseStoreContainer" CdmEntityContainer="WareHouseDB">
+          <EntitySetMapping Name="CategoryProducts">
+            <EntityTypeMapping TypeName="DBWareHouse.CategoryProduct">
+              <MappingFragment StoreEntitySet="CategoryProduct">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DBWareHouse.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExportWarehouses">
+            <EntityTypeMapping TypeName="DBWareHouse.ExportWarehouse">
+              <MappingFragment StoreEntitySet="ExportWarehouse">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportWarehouses">
+            <EntityTypeMapping TypeName="DBWareHouse.ImportWarehouse">
+              <MappingFragment StoreEntitySet="ImportWarehouse">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBWareHouse.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="DBWareHouse.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="DBWareHouse.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailExportWarehouses">
+            <EntityTypeMapping TypeName="DBWareHouse.DetailExportWarehouse">
+              <MappingFragment StoreEntitySet="DetailExportWarehouse">
+                <ScalarProperty Name="ExportID" ColumnName="ExportID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailImportWarehoses">
+            <EntityTypeMapping TypeName="DBWareHouse.DetailImportWarehose">
+              <MappingFragment StoreEntitySet="DetailImportWarehose">
+                <ScalarProperty Name="ImportID" ColumnName="ImportID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

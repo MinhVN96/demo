@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42d9081ab5bd4652bc967e9dc2cd5900" Name="Diagram1">
+        <EntityTypeShape EntityType="DBWareHouse.CategoryProduct" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.Customer" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.ExportWarehouse" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.ImportWarehouse" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.Product" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.Supplier" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.Warehouse" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.DetailExportWarehouse" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBWareHouse.DetailImportWarehose" Width="1.5" PointX="8.25" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="DBWareHouse.FK_Product_CategoryProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_ExportWarehouse_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_DetailExportWarehouse_ExportWarehouse1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_ExportWarehouse_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_DetailImportWarehose_ImportWarehouse1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_ImportWarehouse_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_ImportWarehouse_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_DetailExportWarehouse_Product1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_DetailImportWarehose_Product1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBWareHouse.FK_Product_Warehouse" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
